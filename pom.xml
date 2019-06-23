@@ -8,6 +8,17 @@
     <artifactId>networkutils</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <packaging>jar</packaging>
+    <url>https://github.com/empow/Utils</url>
+    <name>empow utils</name>
+    <description>empow utils</description>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Assaf Abulafia</name>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.java.target>1.8</project.build.java.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -99,4 +110,15 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 </project>

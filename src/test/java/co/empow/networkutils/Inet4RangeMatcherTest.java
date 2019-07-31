@@ -5,6 +5,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class Inet4RangeMatcherTest {
+    
+    @Test
+    public void testEmptyBuilder() {
+        Inet4RangeMatcher matcher = new Inet4RangeMatcher.Builder().build();
+        assertFalse(matcher.inRange("1.1.1.1"));
+    }
 
     @Test
     public void testOverlappingRanges() {

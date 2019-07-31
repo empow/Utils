@@ -71,8 +71,10 @@ public class Inet4RangeMatcher {
                     previousRange = currentItem;
                 }
             }
-
-            builder.add(previousRange);
+            
+            if (previousRange != null) {
+                builder.add(previousRange);
+            }
 
             ImmutableRangeSet<Integer> compactedRanges = builder.build();
 

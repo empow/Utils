@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import static co.empow.networkutils.NetUtils.ip2Integer;
+
 public class Inet4RangeMatcher {
 
     private final RangeSet<Integer> ranges;
@@ -99,10 +101,5 @@ public class Inet4RangeMatcher {
 
             return addRange(lowAddress, highAddress);
         }
-    }
-
-    private static int ip2Integer(String ip) {
-        InetAddress address = InetAddresses.forString(ip);
-        return InetAddresses.coerceToInteger(address);
     }
 }

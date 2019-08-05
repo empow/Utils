@@ -13,6 +13,15 @@ public class Inet4RangeMatcherTest {
     }
 
     @Test
+    public void testStartAndEndAreTheSame() {
+        Inet4RangeMatcher matcher = new Inet4RangeMatcher.Builder()
+                .addRange("1.1.1.5", "1.1.1.5")
+                .build();
+
+        assertTrue(matcher.inRange("1.1.1.5"));
+    }
+
+    @Test
     public void testOverlappingRanges() {
         Inet4RangeMatcher matcher = new Inet4RangeMatcher.Builder()
                 .addRange("1.1.1.1", "1.1.1.5")

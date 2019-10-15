@@ -16,6 +16,17 @@
             <name>Assaf Abulafia</name>
         </developer>
     </developers>
+    
+    <licenses>
+        <license>
+            <name>Lesser General Public License (LGPL) version 3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
+        </license>
+        <license>
+            <name>Apache Software License (ASL) version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
     <scm>
         <connection>scm:git:https://github.com/empow/Utils.git</connection>

@@ -1,11 +1,8 @@
 package co.empow.networkutils;
 
 import com.google.common.collect.*;
-import com.google.common.net.InetAddresses;
 import org.apache.commons.net.util.SubnetUtils;
-import sun.nio.ch.Net;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;

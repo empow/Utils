@@ -5,8 +5,14 @@ import com.google.common.net.InetAddresses;
 import java.net.InetAddress;
 
 public class NetUtils {
-    public static int ip2Integer(String ip) {
+    public static long ip2Long(String ip) {
         InetAddress address = InetAddresses.forString(ip);
-        return InetAddresses.coerceToInteger(address);
+        int ipAsInt = InetAddresses.coerceToInteger(address);
+        long ipAsLong = int2long(ipAsInt);
+        return ipAsLong;
+    }
+
+    private static long int2long(int i) {
+        return i & 0xffffffffL;
     }
 }

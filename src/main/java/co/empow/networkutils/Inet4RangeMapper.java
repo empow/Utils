@@ -10,18 +10,18 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import static co.empow.networkutils.NetUtils.ip2Integer;
+import static co.empow.networkutils.NetUtils.ip2Long;
 
 public class Inet4RangeMapper<V> {
 
-    public final RangeMap<Integer, Set<V>> rangeMap;
+    public final RangeMap<Long, Set<V>> rangeMap;
 
-    public Inet4RangeMapper(RangeMap<Integer, Set<V>> rangeMap) {
+    public Inet4RangeMapper(RangeMap<Long, Set<V>> rangeMap) {
         this.rangeMap = rangeMap;
     }
 
     public Set<V> map(String ip) {
-        return map(ip2Integer(ip));
+        return map(ip2Long(ip));
     }
 
     public Set<V> map(InetAddress ip) {
@@ -29,8 +29,8 @@ public class Inet4RangeMapper<V> {
         return map(numericValue);
     }
 
-    private Set<V> map(int ip) {
-        Map.Entry<Range<Integer>, Set<V>> entry = rangeMap.getEntry(ip);
+    private Set<V> map(long ip) {
+        Map.Entry<Range<Long>, Set<V>> entry = rangeMap.getEntry(ip);
 
         if (entry == null) {
             return Collections.emptySet();
@@ -40,16 +40,16 @@ public class Inet4RangeMapper<V> {
     }
 
     public static class Builder<V> {
-        private RangeMap<Integer, Set<V>> rangeMap = TreeRangeMap.create();
+        private RangeMap<Long, Set<V>> rangeMap = TreeRangeMap.create();
 
         public Builder() {
         }
 
         public Builder addRange(String fromAddress, String toAddress, V val) {
-            int lowAddress = ip2Integer(fromAddress);
-            int highAddress = ip2Integer(toAddress);
+            long lowAddress = ip2Long(fromAddress);
+            long highAddress = ip2Long(toAddress);
 
-            Range<Integer> range = Range.closed(lowAddress, highAddress);
+            Range<Long> range = Range.closed(lowAddress, highAddress);
 
             return addRange(range, val);
         }
@@ -63,15 +63,15 @@ public class Inet4RangeMapper<V> {
             return addRange(lowAddress, highAddress, val);
         }
 
-        private Builder<V> addRange(Range<Integer> range, V val) {
-            RangeMap<Integer, Set<V>> subRange = ImmutableRangeMap.copyOf(rangeMap.subRangeMap(range));
+        private Builder<V> addRange(Range<Long> range, V val) {
+            RangeMap<Long, Set<V>> subRange = ImmutableRangeMap.copyOf(rangeMap.subRangeMap(range));
 
             rangeMap.put(range, Sets.newHashSet(val));
 
             if (!subRange.asMapOfRanges().isEmpty()) {
-                for (Map.Entry<Range<Integer>, Set<V>> entry : subRange.asMapOfRanges().entrySet()) {
-                    Range<Integer> currentKey = entry.getKey();
-                    Range<Integer> intersection = currentKey.intersection(range);
+                for (Map.Entry<Range<Long>, Set<V>> entry : subRange.asMapOfRanges().entrySet()) {
+                    Range<Long> currentKey = entry.getKey();
+                    Range<Long> intersection = currentKey.intersection(range);
 
                     Set<V> values = Sets.newHashSet(entry.getValue());
                     values.add(val);
@@ -87,27 +87,27 @@ public class Inet4RangeMapper<V> {
             return new Inet4RangeMapper<>(getCoalescedRanges());
         }
 
-        private RangeMap<Integer, Set<V>> getCoalescedRanges() {
-            ImmutableRangeMap.Builder<Integer, Set<V>> builder = ImmutableRangeMap.builder();
+        private RangeMap<Long, Set<V>> getCoalescedRanges() {
+            ImmutableRangeMap.Builder<Long, Set<V>> builder = ImmutableRangeMap.builder();
 
-            Iterator<Map.Entry<Range<Integer>, Set<V>>> it = rangeMap.asDescendingMapOfRanges().entrySet().iterator();
+            Iterator<Map.Entry<Range<Long>, Set<V>>> it = rangeMap.asDescendingMapOfRanges().entrySet().iterator();
 
             if (!it.hasNext()) {
                 return builder.build();
             }
 
-            Map.Entry<Range<Integer>, Set<V>> current = it.next();
+            Map.Entry<Range<Long>, Set<V>> current = it.next();
 
-            Range<Integer> previousRange = current.getKey();
+            Range<Long> previousRange = current.getKey();
             Set<V> previousValues = current.getValue();
 
             while (it.hasNext()) {
                 current = it.next();
-                Range<Integer> currentRange = current.getKey();
+                Range<Long> currentRange = current.getKey();
                 Set<V> currentValues = current.getValue();
 
                 if (previousValues.equals(currentValues)) {
-                    Range<Integer> gap = currentRange.gap(previousRange);
+                    Range<Long> gap = currentRange.gap(previousRange);
 
                     if (currentRange.isConnected(previousRange) ||
                             gap.lowerEndpoint() + 1 == gap.upperEndpoint()) {

@@ -4,7 +4,7 @@
 
     <groupId>co.empow</groupId>
     <artifactId>utils</artifactId>
-    <version>1.0.9-RELEASE</version>
+    <version>1.0.10-RELEASE</version>
 
     <packaging>jar</packaging>
     <url>https://github.com/empow/Utils</url>
@@ -126,11 +126,7 @@
     <profiles>
         <profile>
             <id>release-sign-artifacts</id>
-            <activation>
-            <property>
-            <name>gpg.passphrase</name>
-            </property>
-            </activation>
+            <activation><activeByDefault>false</activeByDefault></activation>
             <build>
                 <plugins>
                     <plugin>

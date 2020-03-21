@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>27.1-jre</version>
+            <version>28.2-jre</version>
         </dependency>
 
         <dependency>
@@ -101,11 +101,11 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.google.common</pattern>
-                                    <shadedPattern>shaded.com.google.common</shadedPattern>
+                                    <shadedPattern>shaded.empow.utils.com.google.common</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.apache.commons.net</pattern>
-                                    <shadedPattern>shaded.org.apache.commons.net</shadedPattern>
+                                    <shadedPattern>shaded.empow.utils.org.apache.commons.net</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

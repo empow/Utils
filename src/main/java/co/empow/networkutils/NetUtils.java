@@ -1,8 +1,9 @@
 package co.empow.networkutils;
 
-import com.google.common.net.InetAddresses;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.regex.Pattern;
 
 public class NetUtils {
@@ -10,10 +11,13 @@ public class NetUtils {
     private static final Pattern ipV4Pattern = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
     public static long ip2Long(String ip) {
-        InetAddress address = InetAddresses.forString(ip);
-        int ipAsInt = InetAddresses.coerceToInteger(address);
-        long ipAsLong = int2long(ipAsInt);
-        return ipAsLong;
+        try {
+            InetAddress inetAddress = InetAddress.getByName(ip);
+            int ipAsInt = ByteBuffer.wrap(inetAddress.getAddress()).getInt();
+            return int2long(ipAsInt);
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static long int2long(int i) {
